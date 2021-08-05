@@ -1,38 +1,13 @@
-import ReactMarkdown from "react-markdown";
+import NoteDisplay from 'components/NoteDisplay';
+import MarkdownInput from 'components/MarkdownInput';
 
 const Main = ({ activeNote, onUpdateNote }) => {
-  const onEditField = (fieldKey, value) => {
-    onUpdateNote({
-      ...activeNote,
-      [fieldKey]: value,
-      lastModified: Date.now(),
-    });
-  }
-   
   if (!activeNote) return <div className="no-active-note">No note selected</div>;
    
   return (
     <div className="app-main">
-      <div className="app-main-note-preview">
-        <h1 className="preview-title">{activeNote.title}</h1>
-        <ReactMarkdown className="markdown-preview">{activeNote.body}</ReactMarkdown>
-      </div>
-      <div className="app-main-note-edit">
-        <input
-          type="text"
-          id="title"
-          placeholder="Note title"
-          value={activeNote.title}
-          onChange={(e) => onEditField("title", e.target.value)}
-          autoFocus
-        />
-        <textarea
-          id="body"
-          placeholder="Write your note here..."
-          value={activeNote.body}
-          onChange={(e) => onEditField("body", e.target.value)}
-        />
-      </div>
+      <NoteDisplay activeNote={activeNote} />
+      <MarkdownInput activeNote={activeNote} onUpdateNote={onUpdateNote} />
     </div>
   );
 };
